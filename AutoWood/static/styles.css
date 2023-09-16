@@ -1,0 +1,15 @@
+.form-label{
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.warehousetable {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fileinput {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+
+}

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Insert Manualy
+{% endblock %}
+
+{% block main %}
+<div class="warehousetable">
+    <table id="data" class="table table-bordered table-hover ">
+        <thead>
+            <tr class="table-dark table-hover">
+            <th scope="col">ID</th>
+            <th scope="col">EAN</th>
+            <th scope="col">Type</th>
+            <th scope="col">Model</th>
+            <th scope="col">Color</th>
+            <th scope="col">Wood</th>
+            <th scope="col">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for warehouse in warehouse %}
+            <tr class="table-light table-hover">
+            <td>{{ warehouse.id }}</td>
+            <td>{{ warehouse.EAN }}</td>
+            <td>{{ warehouse.type }}</td>
+            <td>{{ warehouse.model }}</td>
+            <td>{{ warehouse.color }}</td>
+            <td>{{ warehouse.wood }}</td>
+            <td>{{ warehouse.size }}</td>
+            {% endfor %}
+            </tr>
+        </tbody>
+        </table>
+        {% block scripts %}
+        <script>
+          $(document).ready(function(){
+            $('#data').DataTable();
+          });
+
+        </script>
+        {% endblock %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+
+        <link href="/static/favicon.ico" rel="icon">
+
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/bootswatch.css" rel="stylesheet">
+        <title>
+            Auto-Wood{% block title %}{% endblock %}
+        </title>
+    </head>
+    <body>
+      <nav class="bg-light border navbar navbar-expand-md navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Auto - Wood</a>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+
+      {% if session["user_id"] %}
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Home
+                      <span class="visually-hidden">(current)</span>
+                    </a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Insert</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/insert">Insert Manualy</a>
+                      <a class="dropdown-item" href="#">Scan Barcode</a>
+                      <a class="dropdown-item" href="/uploader">Import CSV</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Remove</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Orders</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/show_data">Tables</a>
+                        <a class="dropdown-item" href="/eanreader">Read EAN Code</a>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/warehouse">Warehouse</a>
+                    </li>
+                  </li>
+                </ul>
+              </div>
+            </div>
+                <form class="d-flex">
+                  <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </ul>
+                    </li>
+                {% else %}
+                <form class="d-flex">
+                  <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/register">Register</a>
+                    </ul>
+                    </li>
+                  <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Log In</a>
+                  </ul>
+                  </li>
+
+                  {% endif %}
+                </form>
+
+          </nav>
+
+    </body>
+    <main class="container-fluid py-5 text-center">
+      {% block main %}{% endblock %}
+  </main>
+</html>

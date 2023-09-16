@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Insert Manualy
+{% endblock %}
+
+{% block main %}
+<section id="INSERT">
+    <div class="container-lg">
+        <div class="text-center"></div>
+        <h2>MANUAL INSERT</h2>
+        <p class="lead">Insert the furniture into the database</p>
+    </div>
+    <div class="row justify-content-center my-5">
+    <div class="col-lg-3">
+    <form action="/insert" method="post">
+        <!-- w przyszłość gdy skończysz bazę danych, zrób listy do wyboru rodzajów łóżek i rozmiarów -->
+        <label for="EAN" class="form-label" class="text-black-50">EAN code:</label>
+        <input autocomplete="off" autofocus class="form-control" id="EAN" name="EAN" placeholder="EAN" type="number">
+
+        <label for="type" class="form-label">Type of furniture: </label>
+        <input autocomplete="off" autofocus class="form-control mb-3" id="type" name="type" placeholder="...bed, dresser" type="text">
+
+        <label for="model" class="form-label">Model:</label>
+        <input autocomplete="off" autofocus class="form-control mb-3" id="model" name="model" placeholder="...sandemo,arhus" type="text">
+
+        <label for="color" class="form-label">Color:</label>
+        <input autocomplete="off" autofocus class="form-control mb-3" id="color" name="color" placeholder="...color" type="text">
+
+        <label for="wood" class="form-label">Wood:</label>
+        <input autocomplete="off" autofocus class="form-control mb-3" id="wood" name="wood" placeholder="...type of wood" type="text">
+
+        <label for="size" class="form-label">Size:</label>
+        <input autocomplete="off" autofocus class="form-control mb-3" id="size" name="size" placeholder="...size" type="text">
+
+        <button class="btn btn-primary" type="submit">INSERT</button>
+    </div>
+</form>
+</div>
+</section>
+{% endblock %}
