@@ -2,6 +2,7 @@ import requests
 import sys
 import json
 from geopy.geocoders import Nominatim
+from tabulate import tabulate
 
 def main():
     city = input("City: ").capitalize()
@@ -16,11 +17,11 @@ def main():
     temperature = o['hourly']['temperature_2m']
     rain = o['hourly']['rain']
     day = format_date(time)
-    res = {time[i]: temperature[i] for i in range(len(time))}
-    for temp, date, rain in res.items():
-        print(f"{temp}: {date}")
-
-
+    data = dict(zip(day, zip(temperature, rain)))
+    headers = data.keys()
+    
+    #print(tabulate(rows, tablefmt="grid"))
+    
 
 def get_cords(city):
     geolocator = Nominatim(user_agent="myapplication")
@@ -39,14 +40,8 @@ def format_date(time):
     for day in time:
         new_day = day.replace("T",":")
         new_time.append(new_day)  
-
     return new_time
         
-        
-
-
-
-
 if __name__ == "__main__":
     main()
 
