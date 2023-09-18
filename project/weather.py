@@ -5,13 +5,14 @@ from geopy.geocoders import Nominatim
 from tabulate import tabulate
 
 def main():
+  
+    city = input("City: ").capitalize()
+
     try:
-        city = input("City: ").capitalize()
+        days = int(input("Days: "))
     except(ValueError):
-        sys.exit("Wrong city name")
+        sys.exit("Wrong number of days")
 
-
-    days = input("Days: ")
 
     latitude,longitude = get_cords(city)
     link = link_generator(latitude,longitude,days)
@@ -28,6 +29,10 @@ def main():
     
 
 def get_cords(city):
+    """"
+    This function takes user input of city to get it's localization for open-meteo service
+    
+    """"
     geolocator = Nominatim(user_agent="myapplication")
     location = geolocator.geocode(city)
     latitude = round(float(location.latitude), 2)
@@ -45,7 +50,6 @@ def format_date(time):
         new_day = day.replace("T",": ")
         new_time.append(new_day)  
     return new_time
-
 
         
 if __name__ == "__main__":
