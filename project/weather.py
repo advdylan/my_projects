@@ -17,10 +17,9 @@ def main():
     temperature = o['hourly']['temperature_2m']
     rain = o['hourly']['rain']
     day = format_date(time)
-    data = dict(zip(day, zip(temperature, rain)))
-    headers = data.keys()
-    
-    #print(tabulate(rows, tablefmt="grid"))
+
+    weather_dict = {day[i]: [temperature[i], rain[i]] for i in range(len(day))}
+    print(tabulate([(k, *v) for k, v in weather_dict.items()], headers=['Day', 'Temperature', 'Rain']))
     
 
 def get_cords(city):
@@ -38,17 +37,11 @@ def link_generator(latitude,longitude,days):
 def format_date(time):
     new_time = []
     for day in time:
-        new_day = day.replace("T",":")
+        new_day = day.replace("T",": ")
         new_time.append(new_day)  
     return new_time
+
+
         
 if __name__ == "__main__":
     main()
-
-
-
-    #print(day)
-    #print(time[0], temperature[0])
-    #res = {time[i]: temperature[i] for i in range(len(time))}
-    #for temp, date in res.items():
-        #print(f"{temp}: {date}")
