@@ -13,10 +13,13 @@ def main():
     except(ValueError):
         sys.exit("Wrong number of days")
 
-
+    # Passing the name of the city to get_cords function that returns it's location as latitude and longitude that represent the coordinates at geographic coordinate system
     latitude,longitude = get_cords(city)
+
+    # Passing all the required infomation to generate a link for Open-Meteo to send back json file
     link = link_generator(latitude,longitude,days)
 
+ 
     call = requests.get(link)
     o = call.json()
     time = o['hourly']['time']
@@ -29,10 +32,10 @@ def main():
     
 
 def get_cords(city):
-    """"
+    """
     This function takes user input of city to get it's localization for open-meteo service
-    
-    """"
+    """
+
     geolocator = Nominatim(user_agent="myapplication")
     location = geolocator.geocode(city)
     latitude = round(float(location.latitude), 2)
@@ -41,10 +44,16 @@ def get_cords(city):
     return latitude,longitude
 
 def link_generator(latitude,longitude,days):
+    """
+    Using generated cords of user city, this function creates link for Open-Meteo API
+    """
     link = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,rain&timezone=auto&forecast_days={days}'
     return link
 
 def format_date(time):
+    """
+    Functions that clear output of open-meteo API to make data user friendly
+    """
     new_time = []
     for day in time:
         new_day = day.replace("T",": ")
