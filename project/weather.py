@@ -5,7 +5,12 @@ from geopy.geocoders import Nominatim
 from tabulate import tabulate
 
 def main():
-    city = input("City: ").capitalize()
+    try:
+        city = input("City: ").capitalize()
+    except(ValueError):
+        sys.exit("Wrong city name")
+
+
     days = input("Days: ")
 
     latitude,longitude = get_cords(city)
