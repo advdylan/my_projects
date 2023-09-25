@@ -68,7 +68,7 @@ def print_weather_data(weather_data):
     day = format_date(time)
 
     weather_dict = {day[i]: [temperature[i], rain[i]] for i in range(len(day))}
-    print(tabulate([(k, *v) for k, v in weather_dict.items()], headers=['Day', 'Temperature', 'Rain']))
+    print(tabulate([(k, *v) for k, v in weather_dict.items()], headers=['Day', 'Temperature', 'Rain'], tablefmt="grid"))
 
 if __name__ == "__main__":
     main()
