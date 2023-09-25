@@ -58,6 +58,7 @@ def format_date(time):
     """
     Functions that clear output of open-meteo API to make data user friendly
     """
+    
     new_time = [day.replace("T", ": ") for day in time]
     return new_time
 
