@@ -1,4 +1,5 @@
 import pytest
+from project import get_cords, link_generator, format_date, print_weather_data
 from unittest.mock import patch, MagicMock
 
 def test_get_cords():
