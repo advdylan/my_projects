@@ -21,7 +21,6 @@
           <th scope="col">Size</th>
           <th scope="col">Color</th>
           <th scope="col">Wood</th>
-          <th scope="col">DELETE</th>
           </tr>
       </thead>
       <tbody>
@@ -35,7 +34,6 @@
               <td><input class="form-check-input" type="checkbox" name = "N" value="1" id="N"></td>
               <td><input class="form-check-input" type="checkbox" name = "S" value="1" id="S"></td>
               <td><input class="form-check-input" type="checkbox" name = "O" value="1" id="O"></td>
-              <button class="btn btn-success" type="submit" name="submit_changes" value = "submit_changes">INSERT</button></td>
               </form>
               <td>{{ dict_item['Nazwa w sklepie'] }}</td>
               <td>{{ dict_item['Nazwa kategorii'] }}</td>
@@ -43,12 +41,6 @@
               <td>{{ dict_item['Kolor drewna'] }}</td>
               <td>{{ dict_item['Rodzaj drewna'] }}</td>
               </form>
-              <td>
-              <form action="/delete_row" method="post">
-                  <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
-                  <button type="submit" class="btn btn-outline-danger">DELETE</button>
-              </form>
-          </td>
           </tr> 
           
 
