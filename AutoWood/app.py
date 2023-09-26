@@ -3,6 +3,8 @@ import pandas as pd
 import cv2
 
 
+from glob import glob
+from pyzbar import pyzbar
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask import *
@@ -13,7 +15,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
 
 
-from helpers import login_required, apology
+from helpers import login_required, apology, decode, impdb
 
 UPLOAD_FOLDER = os.path.join('csvfiles')
 
@@ -40,16 +42,29 @@ def after_request(response):
     return response
 
 
-
 @app.route("/eanreader", methods=["GET", "POST"])
 @login_required
 def eanreader():
-    return render_template("warehouse.html")
+
+    eans = []
+    barcodes = glob("orders/barcode*.png")
+    for barcode_file in barcodes:
+        img = cv2.imread(barcode_file)
+        img, orders = decode(img)
+        order = orders[0]
+        cv2.waitKey(0)
+    
+        eans_request = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ?', order )
+        eans.append(eans_request[0])
+    
+        
+    return render_template("eanreader.html", eans=eans)
 
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
+    
     return render_template("index.html")
 
 @app.route('/uploader')
@@ -72,42 +87,125 @@ def uploader():
     return redirect("/show_data")
 
 
-@app.route("/show_data")
-def showData():
-    data_file_path = session.get('uploaded_data_file_path', None)
-    uploaded_df = pd.read_csv(data_file_path, encoding = 'unicode_escape')
+#@app.route("/orders")
+#def showData():
 
-    uploaded_df_html = uploaded_df.to_html()
-    return render_template('show_csv_data.html', data_var=uploaded_df_html)
+@app.route("/production", methods=["GET", "POST"])
+@login_required
+def production():
+    if request.method == "GET":
+        return render_template("production.html")
+    
+    
+@app.route("/productiontable", methods = ["GET", "POST"])
+@login_required
+def productiontable():
 
+    if request.method == "GET":
+        return render_template("productiontable.html")
+    if request.method == "POST":
+        production_week = request.form.get("show")
+        orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        return render_template("productiontable.html", orders = orders)
+    
+@app.route("/submit_changes", methods=["POST"])
+@login_required
+def update_table():
+    if request.method == "POST":
+        production_week = request.form.get("production_week")
+        print(production_week)
+        # Get the values of the checked checkboxes
+        p = request.form.get('P')
+        print(p)
+        # Update the values in the database
+       
+        orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        return render_template("productiontable.html", orders = orders)
+        
 
+@app.route("/insertorder", methods=["GET", "POST"])
+@login_required
+def insertorder():
+        
+    eans = db.execute('SELECT "Kod EAN" FROM sekwojaean;')
+    if request.method == "POST":
+        if request.form['submit_button'] == 'insert':
+            eanchosen = request.form.get("eanchosen")
+            current_date = date.today()
+            week = request.form.get("week")
+            week = int(week)
+            if week == 0 or week >= 52:
+                flash("Wrong week number")
+                return redirect("/insertorder")
+            zd = request.form.get("ZD")
+            if zd == '0':
+                flash("Wrong ZD number")
+                return redirect("/insertorder")
+            db.execute("INSERT INTO orders (EAN_CODE, date, week, zd) VALUES (?, ?, ?, ?)", eanchosen, current_date, week, zd)
+            return redirect("/orders")
+        
+        elif request.form['submit_button'] == 'check':
+            eancheck = request.form.get("eanchosen")
+            eanviewer = db.execute('SELECT * FROM sekwojaean WHERE "Kod Ean" = (?)', eancheck)
+            return render_template("insertorder.html", eans = eans, eancheck = eancheck, eanviewer = eanviewer)
+    
+    if request.method == "GET":
+        return render_template("insertorder.html", eans=eans)
+    
+@app.route("/orders", methods=["GET", "POST"])
+@login_required
+def orders():
+
+    orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN"')
+    return render_template("orders.html", orders=orders)
+
+@app.route("/delete_row", methods =["POST"])
+@login_required
+def delete_row():
+
+    if request.method == "POST":
+        row_id = request.form.get("indexcode")
+        db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
+        return redirect("/orders")
+    
+@app.route("/delete_wrow", methods =["POST"])
+@login_required
+def delete_wrow():
+
+    if request.method == "POST":
+        row_id = request.form.get("indexcode")
+        print(row_id)
+        db.execute("DELETE FROM warehouse WHERE EAN_CODE = ?", row_id)
+        return redirect("/warehouse")
 
 
 
 @app.route("/insert", methods=["GET", "POST"])
 @login_required
-def insert():
+def insert():     
+
+    eans = db.execute('SELECT "Kod EAN" FROM sekwojaean;')
     if request.method == "POST":
-        EAN = request.form.get("EAN")
-        type = request.form.get("type")
-        model = request.form.get("model")
-        color = request.form.get("color")
-        wood = request.form.get("wood")
-        size = request.form.get("size")
+        if request.form['submit_button'] == 'insert':
+            eanchosen = request.form.get("eanchosen")
+            db.execute("INSERT INTO warehouse (EAN_CODE) VALUES (?)", eanchosen)
 
-        db.execute("INSERT INTO furnitures (EAN,type,model,color,wood,size) VALUES (?, ?, ?, ?, ?, ?)",
-                   EAN, type, model, color, wood, size)
+            return redirect("/warehouse")
+        elif request.form['submit_button'] == 'check':
+            eancheck = request.form.get("eanchosen")
+            eanviewer = db.execute('SELECT * FROM sekwojaean WHERE "Kod Ean" = (?)', eancheck)
+            return render_template("insert.html", eans = eans, eancheck = eancheck, eanviewer = eanviewer)
+    
+    if request.method == "GET":
+        return render_template("insert.html", eans=eans)
 
-        return render_template("warehouse.html", EAN = EAN, type = type, model=model,color=color, wood=wood,size=size)
-
-    return render_template("insert.html")
+    
 
 @app.route("/warehouse", methods=["GET", "POST"])
+@login_required
 def warehouse():
 
-    warehouse = db.execute("SELECT * FROM FURNITURES")
-    print(warehouse)
-
+    warehouse = db.execute('SELECT * FROM warehouse JOIN sekwojaean ON warehouse.EAN_CODE = sekwojaean."Kod EAN"')
     return render_template("warehouse.html", warehouse=warehouse)
 
 if __name__ == '__main__':
@@ -187,6 +285,3 @@ def register():
             return apology("username already exists", 400)
 
     return render_template("register.html")
-
-
-

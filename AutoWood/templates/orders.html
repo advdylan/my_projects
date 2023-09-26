@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Insert Manualy
+{% endblock %}
+
+{% block main %}
+<div class="orderstable">
+  <table id="data" class="table table-sm table-bordered table-hover ">
+      <thead>
+          <tr class="table-dark table-hover">
+          <th scope="col">ZD</th>
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Size</th>
+          <th scope="col">Color</th>
+          <th scope="col">Wood</th>
+          <th scope="col">Symbol</th>
+          <th scope="col">Date</th>
+          <th scope="col">DELETE</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for dict_item in orders %}
+          <tr class="table-light table-hover">
+              <td>{{ dict_item['ZD'] }}</td>
+              <td>{{ dict_item['Nazwa w sklepie'] }}</td>
+              <td>{{ dict_item['Nazwa kategorii'] }}</td>
+              <td>{{ dict_item['Wymiary'] }}</td>
+              <td>{{ dict_item['Kolor drewna'] }}</td>
+              <td>{{ dict_item['Rodzaj drewna'] }}</td>
+              <td>{{ dict_item['Symbol'] }}</td>
+              <td>{{ dict_item['date'] }}</td>
+              <td>
+                <form action="/delete_row" method="post">
+                  <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
+                  <button type="submit" class="btn btn-outline-danger">DELETE</button>
+              </form>
+          </td>
+          </tr> 
+          {% endfor %}
+          
+      </tbody>
+      </table>
+      {% block scripts %}
+      <script>
+        $(document).ready(function(){
+          $('#data').DataTable();
+        });
+
+      </script>
+      {% endblock %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Production
+{% endblock %}
+
+{% block main %}
+<form action="/productiontable" method="post">
+<div class="container w-25">
+    <label for="exampleSelect1" class="form-label mt-4">SELECT WEEK
+    </label>
+    <select class="form-select" id="show" name = "show" value = "show">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+    </select>
+</div>
+<button class="btn btn-dark" type="submit" name="submit_button" value = "show">SHOW</button>
+</form>
+
+{% endblock %}

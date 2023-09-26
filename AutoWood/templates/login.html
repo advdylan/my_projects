@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block main %}
+<div class="alert alert-dismissible alert-secondary">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>Warning!</strong> There is no registration available to this application. To get worker account <a href="#" class="alert-link">contact HR</a>.
+</div>
     <form action="/login" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">

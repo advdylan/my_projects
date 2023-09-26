@@ -3,13 +3,40 @@
   font-size: 1.5rem;
 }
 .warehousetable {
-  width: 70%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px
 }
 .fileinput {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
-
 }
+
+.form-select {
+  width: 20%;
+}
+
+
+.eanviewertable {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 100px;
+}
+.btn-dark {
+  margin-top:  20px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f0d7af;
+  text-align: center;
+}
+
+.flashes {
+  color:rgb(255, 0, 0);  
+  } 
