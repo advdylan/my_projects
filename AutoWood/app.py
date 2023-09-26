@@ -93,14 +93,18 @@ def uploader():
 @app.route("/production", methods=["GET", "POST"])
 @login_required
 def production():
+
+    week_list = db.execute("SELECT DISTINCT week FROM orders")
+
     if request.method == "GET":
-        return render_template("production.html")
+        return render_template("production.html", week_list = week_list)
     
     
 @app.route("/productiontable", methods = ["GET", "POST"])
 @login_required
 def productiontable():
 
+    #Masz błąd w wyświetlaniu tej tabeli. Używasz tabeli order w której nie ma PTNSO
     if request.method == "GET":
         return render_template("productiontable.html")
     if request.method == "POST":
@@ -174,7 +178,6 @@ def delete_wrow():
 
     if request.method == "POST":
         row_id = request.form.get("indexcode")
-        print(row_id)
         db.execute("DELETE FROM warehouse WHERE EAN_CODE = ?", row_id)
         return redirect("/warehouse")
 
