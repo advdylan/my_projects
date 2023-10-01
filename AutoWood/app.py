@@ -198,7 +198,21 @@ def delete_wrow():
         row_id = request.form.get("indexcode")
         db.execute("DELETE FROM warehouse WHERE EAN_CODE = ?", row_id)
         return redirect("/warehouse")
+    
+@app.route("/sendtoproduction", methods =["POST"])
+@login_required
+def sendtoproduction():
+    if request.method == "POST":
+        row_id = request.form.get("indexcode") 
+        print(row_id)
+        zd = request.form.get("ZD")
 
+        db.execute("INSERT INTO production (EAN_CODE, ZD) VALUES (?, ?)", row_id, zd)
+        return redirect("/orders")
+
+
+        #orderinfo = db.execute("SELECT * FROM production WHERE EAN_CODE = ?",row_id)
+        #print(orderinfo)
 
 
 @app.route("/insert", methods=["GET", "POST"])

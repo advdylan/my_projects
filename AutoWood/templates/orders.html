@@ -18,6 +18,7 @@
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
           <th scope="col">DELETE</th>
+          <th scope="col">SEND</th>
           </tr>
       </thead>
       <tbody>
@@ -36,7 +37,14 @@
                   <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
                   <button type="submit" class="btn btn-outline-danger">DELETE</button>
               </form>
-          </td>
+              </td>
+              <td>
+                <form action="/sendtoproduction" method="post">
+                  <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
+                  <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
+                  <button type="submit" class="btn btn-outline-danger">SEND TO PRODUCTION</button>
+              </form>
+              </td>
           </tr> 
           {% endfor %}
           
