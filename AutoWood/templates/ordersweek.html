@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Production
+{% endblock %}
+
+{% block main %}
+<form action="/orders" method="post">
+<div class="container w-25">
+    <label for="exampleSelect1" class="form-label mt-4">SELECT WEEK
+    </label>
+    <select class="form-select" id="showorder" name = "showorder" value ="showorder">
+      {% for dict_item in week_list %}
+      <option>{{ dict_item['week']}}</option>
+      {% endfor %}
+    </select>
+</div>
+<button class="btn btn-dark" type="submit" name="submit_button" value = "show">SHOW</button>
+</form>
+
+{% endblock %}
