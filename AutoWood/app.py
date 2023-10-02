@@ -109,7 +109,7 @@ def productiontable():
         return render_template("productiontable.html")
     if request.method == "POST":
         production_week = request.form.get("show")
-        orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        orders = db.execute('SELECT * FROM production JOIN sekwojaean ON production.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         return render_template("productiontable.html", orders = orders)
     
 @app.route("/submit_changes", methods=["POST"])
@@ -122,8 +122,8 @@ def update_table():
         p = request.form.get('P')
         print(p)
         # Update the values in the database
-       
-        orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        orders = db.execute('SELECT * FROM production JOIN sekwojaean ON production.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        print(orders)
         return render_template("productiontable.html", orders = orders)
         
 
@@ -206,8 +206,11 @@ def sendtoproduction():
         row_id = request.form.get("indexcode") 
         print(row_id)
         zd = request.form.get("ZD")
-
-        db.execute("INSERT INTO production (EAN_CODE, ZD) VALUES (?, ?)", row_id, zd)
+        current_date = date.today()
+        print(zd)
+        week = request.form.get("week")
+        print(week)
+        db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
         return redirect("/orders")
 
 
