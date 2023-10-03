@@ -22,6 +22,7 @@ UPLOAD_FOLDER = os.path.join('csvfiles')
 ALLOWED_EXTENSIONS = {'csv'}
 
 app = Flask(__name__)
+app.secret_key = '2162445'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -139,14 +140,16 @@ def insertorder():
             week = request.form.get("week")
             week = int(week)
             if week == 0 or week >= 52:
-                flash("Wrong week number")
+                flash("Wrong week number", "danger")
                 return redirect("/insertorder")
             zd = request.form.get("ZD")
             if zd == '0':
-                flash("Wrong ZD number")
+                flash("Wrong ZD number", "danger")
                 return redirect("/insertorder")
+            flash("Succes", "success" )
             db.execute("INSERT INTO orders (EAN_CODE, date, week, zd) VALUES (?, ?, ?, ?)", eanchosen, current_date, week, zd)
-            return redirect("/orders")
+            return render_template("insertorder.html")
+            
         
         elif request.form['submit_button'] == 'check':
             eancheck = request.form.get("eanchosen")

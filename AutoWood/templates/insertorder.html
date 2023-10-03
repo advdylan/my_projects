@@ -33,16 +33,15 @@
         <label for ="weak" class="form-label" class="text-black-50" for="ZD">ZD:</label>
         <input class="form-control form-control-lg" type="text" placeholder="ZD" id="ZD" name="ZD">
       </div>
-            {% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
         
-            {% for message in messages %}
-            <div class="alert alert-dismissible alert-danger">
+            {% for category, message in messages %}
+            <div class="alert alert-dismissible alert-{{ category }}">
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              <strong>Error</strong> <a href="#" class="alert-link">{{ message }}
+              <strong>{{ category.upper() }}</strong>
             </div>
           {% endfor %}
-      </ul>
       {% endif %}
       {% endwith %}
 
