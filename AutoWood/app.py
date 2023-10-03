@@ -6,7 +6,7 @@ import cv2
 from glob import glob
 from pyzbar import pyzbar
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, Response
 from flask import *
 from flask_session import Session
 from fileinput import filename
@@ -213,6 +213,7 @@ def sendtoproduction():
         print(zd)
         week = request.form.get("week")
         print(week)
+        flash
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
         return redirect("/orders")
 
