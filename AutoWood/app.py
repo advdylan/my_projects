@@ -213,9 +213,9 @@ def sendtoproduction():
         print(zd)
         week = request.form.get("week")
         print(week)
-        flash
+        flash("Success", "success")
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
-        return redirect("/orders")
+        return Response(status=204)
 
 
         #orderinfo = db.execute("SELECT * FROM production WHERE EAN_CODE = ?",row_id)
