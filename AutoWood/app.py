@@ -217,11 +217,6 @@ def sendtoproduction():
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
         return Response(status=204)
 
-
-        #orderinfo = db.execute("SELECT * FROM production WHERE EAN_CODE = ?",row_id)
-        #print(orderinfo)
-
-
 @app.route("/insert", methods=["GET", "POST"])
 @login_required
 def insert():     

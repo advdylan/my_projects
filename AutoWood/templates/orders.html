@@ -48,18 +48,7 @@
               </td>
           </tr> 
           {% endfor %}
-        </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-    
-        {% for category, message in messages %}
-        <div class="alert alert-dismissible alert-{{ category }}">
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          <strong>{{ category.upper() }}</strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+ 
           
       </tbody>
       </table>
@@ -72,5 +61,17 @@
       </script>
       {% endblock %}
 </div>
+       </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+    
+        {% for category, message in messages %}
+        <div class="alert alert-dismissible alert-{{ category }}">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong>{{ category.upper() }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
 {% endblock %}
