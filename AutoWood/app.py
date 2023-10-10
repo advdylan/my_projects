@@ -189,7 +189,7 @@ def update_checkbox():
     checkbox_status = request.form.get('status')
     checkbox_name = request.form.get('name')
     db.execute('UPDATE production SET ? = ? WHERE id = ?', checkbox_name, checkbox_status, checkbox_id)
-    
+    return Response(status=204)
 
 @app.route("/delete_row", methods =["POST"])
 @login_required
