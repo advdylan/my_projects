@@ -215,7 +215,7 @@ def sendtoproduction():
         print(week)
         flash("Success", "success")
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
-        return Response(status=204)
+        return jsonify({"message": "Success"}), 200
 
 @app.route("/insert", methods=["GET", "POST"])
 @login_required

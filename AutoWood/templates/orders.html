@@ -62,16 +62,20 @@
       {% endblock %}
 </div>
        </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-    
-        {% for category, message in messages %}
-        <div class="alert alert-dismissible alert-{{ category }}">
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          <strong>{{ category.upper() }}</strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+        <script>
+          $(document).ready(function(){
+              $("form").on("submit", function(event){
+                  event.preventDefault();
+                  $.ajax({
+                      url: "/sendtoproduction",
+                      type: "POST",
+                      data: $(this).serialize(),
+                      success: function(response){
+                          alert("Success");
+                      }
+                  });
+              });
+          });
+          </script>
 
 {% endblock %}
