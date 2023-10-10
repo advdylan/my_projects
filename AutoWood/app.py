@@ -121,10 +121,8 @@ def update_table():
         print(production_week)
         # Get the values of the checked checkboxes
         p = request.form.get('P')
-        print(p)
         # Update the values in the database
         orders = db.execute('SELECT * FROM production JOIN sekwojaean ON production.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
-        print(orders)
         return render_template("productiontable.html", orders = orders)
         
 
@@ -214,7 +212,7 @@ def sendtoproduction():
         week = request.form.get("week")
         print(week)
         flash("Success", "success")
-        db.execute("INSERT INTO production (EAN_CODE, date, week, ZD) VALUES (?, ?, ?, ?)", row_id, current_date, week, zd)
+        db.execute("INSERT INTO production (EAN_CODE, date, week, ZD, P, T, N, S, O) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 0)", row_id, current_date, week, zd)
         return jsonify({"message": "Success"}), 200
 
 @app.route("/insert", methods=["GET", "POST"])

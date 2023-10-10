@@ -29,11 +29,11 @@
               <td>{{ dict_item['ZD'] }}</td>
               <form action ="/submit_changes" method="POST">
               <input type="hidden" id = "production_week" name = "production_week" value="{{ dict_item['week'] }}">
-              <td><input class="form-check-input" type="checkbox" name = "P" value="0" id="P"></td>
-              <td><input class="form-check-input" type="checkbox" name = "T" value="0" id="T"></td>
-              <td><input class="form-check-input" type="checkbox" name = "N" value="0" id="N"></td>
-              <td><input class="form-check-input" type="checkbox" name = "S" value="0" id="S"></td>
-              <td><input class="form-check-input" type="checkbox" name = "O" value="0" id="O"></td>
+              <td><input class="form-check-input" type="checkbox" name="P" value="{{ dict_item['P'] }}" id="P" data-id="{{ dict_item['id'] }}"></td>
+              <td><input class="form-check-input" type="checkbox" name="T" value="{{ dict_item['T'] }}" id="T" data-id="{{ dict_item['id'] }}"></td>
+              <td><input class="form-check-input" type="checkbox" name="N" value="{{ dict_item['N'] }}" id="N" data-id="{{ dict_item['id'] }}"></td>
+              <td><input class="form-check-input" type="checkbox" name="S" value="{{ dict_item['S'] }}" id="S" data-id="{{ dict_item['id'] }}"></td>
+              <td><input class="form-check-input" type="checkbox" name="O" value="{{ dict_item['O'] }}" id="O" data-id="{{ dict_item['id'] }}"></td>
               </form>
               <td>{{ dict_item['Nazwa w sklepie'] }}</td>
               <td>{{ dict_item['Nazwa kategorii'] }}</td>
