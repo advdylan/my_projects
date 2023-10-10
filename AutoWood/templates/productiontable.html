@@ -40,45 +40,43 @@
               <td>{{ dict_item['Wymiary'] }}</td>
               <td>{{ dict_item['Kolor drewna'] }}</td>
               <td>{{ dict_item['Rodzaj drewna'] }}</td>
-              </form>
           </tr> 
           
 
       {% endfor %}
-      <script>
-      $(document).ready(function() {
-          $('.form-check-input').change(function() {
-              var checkbox_id = $(this).data('id');
-              var checkbox_status = $(this).is(':checked') ? 1 : 0;
-              var checkbox_name = $(this).attr('name');
-              $.ajax({
-                  url: '/update_checkbox',
-                  data: {'id': checkbox_id, 'status': checkbox_status, 'name': checkbox_name},
-                  type: 'POST',
-                  success: function(response) {
-                      console.log(response);
-                  },
-                  error: function(error) {
-                      console.log(error);
-                  }
-              });
-          });
-      });
-      </script>
+
       </tbody>
       </table>
       
-
-     
-
-      
       {% block scripts %}
-      <script>
+        <script>
+        var jq = jQuery.noConflict();
+        </script>
+        <script>
         $(document).ready(function(){
           $('#data').DataTable();
         });
-
       </script>
+            <script>
+                jq(document).ready(function() {
+                    jq('.form-check-input').change(function() {
+                        var checkbox_id = jq(this).data('id');
+                        var checkbox_status = jq(this).is(':checked') ? 1 : 0;
+                        var checkbox_name = jq(this).attr('name');
+                        jq.ajax({
+                            url: '/update_checkbox',
+                            data: {'id': checkbox_id, 'status': checkbox_status, 'name': checkbox_name},
+                            type: 'POST',
+                            success: function(response) {
+                                console.log(response);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    });
+                });
+                </script>
       {% endblock %}
 </div>
 

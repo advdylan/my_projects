@@ -197,8 +197,9 @@ def delete_row():
 
     if request.method == "POST":
         row_id = request.form.get("indexcode")
+        flash("Success", "success")
         db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
-        return redirect("/orders")
+        return jsonify({"message": "Success"}), 200
     
 @app.route("/delete_wrow", methods =["POST"])
 @login_required
@@ -214,12 +215,9 @@ def delete_wrow():
 def sendtoproduction():
     if request.method == "POST":
         row_id = request.form.get("indexcode") 
-        print(row_id)
         zd = request.form.get("ZD")
         current_date = date.today()
-        print(zd)
         week = request.form.get("week")
-        print(week)
         flash("Success", "success")
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD, P, T, N, S, O) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 0)", row_id, current_date, week, zd)
         return jsonify({"message": "Success"}), 200

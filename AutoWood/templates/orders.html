@@ -39,7 +39,7 @@
               </form>
               </td>
               <td>
-                <form action="/sendtoproduction" method="post">
+                <form class="sendtoproduction" action="/sendtoproduction" method="post">
                   <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
                   <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
                   <input type="hidden" name="week" value="{{ dict_item['week'] }}">
@@ -54,6 +54,9 @@
       </table>
       {% block scripts %}
       <script>
+        var jq = jQuery.noConflict();
+        </script>
+      <script>
         $(document).ready(function(){
           $('#data').DataTable();
         });
@@ -63,13 +66,13 @@
 </div>
        </div>
         <script>
-          $(document).ready(function(){
-              $("form").on("submit", function(event){
+          jq(document).ready(function(){
+              jq("#sendtoproduction").on("submit", function(event){
                   event.preventDefault();
-                  $.ajax({
+                  jq.ajax({
                       url: "/sendtoproduction",
                       type: "POST",
-                      data: $(this).serialize(),
+                      data: jq(this).serialize(),
                       success: function(response){
                           alert("Success");
                       }
