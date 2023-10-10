@@ -45,6 +45,26 @@
           
 
       {% endfor %}
+      <script>
+      $(document).ready(function() {
+          $('.form-check-input').change(function() {
+              var checkbox_id = $(this).data('id');
+              var checkbox_status = $(this).is(':checked') ? 1 : 0;
+              var checkbox_name = $(this).attr('name');
+              $.ajax({
+                  url: '/update_checkbox',
+                  data: {'id': checkbox_id, 'status': checkbox_status, 'name': checkbox_name},
+                  type: 'POST',
+                  success: function(response) {
+                      console.log(response);
+                  },
+                  error: function(error) {
+                      console.log(error);
+                  }
+              });
+          });
+      });
+      </script>
       </tbody>
       </table>
       

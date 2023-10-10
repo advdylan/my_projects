@@ -180,6 +180,15 @@ def orders():
         production_week = request.form.get("showorder")
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         return render_template("orders.html", orders = orders)
+
+
+@app.route("/update_checkbox", methods = ["POST"])
+@login_required
+def update_checkbox():
+    checkbox_id = request.form.get('id')
+    checkbox_status = request.form.get('status')
+    checkbox_name = request.form.get('name')
+    db.execute('UPDATE production SET ? = ? WHERE id = ?', checkbox_name, checkbox_status, checkbox_id)
     
 
 @app.route("/delete_row", methods =["POST"])
