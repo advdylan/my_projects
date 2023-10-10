@@ -54,7 +54,7 @@ def eanreader():
         img, orders = decode(img)
         order = orders[0]
         cv2.waitKey(0)
-    
+
         eans_request = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ?', order )
         eans.append(eans_request[0])
     
@@ -105,7 +105,6 @@ def production():
 @login_required
 def productiontable():
 
-    #Masz błąd w wyświetlaniu tej tabeli. Używasz tabeli order w której nie ma PTNSO
     if request.method == "GET":
         return render_template("productiontable.html")
     if request.method == "POST":
