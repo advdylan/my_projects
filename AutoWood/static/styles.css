@@ -41,18 +41,34 @@
   color:rgb(255, 0, 0);  
   } 
 
-body, html {
+/* Create a pseudo-element with an empty content */
+div::before {
+  content: "";
+}
+
+/* Set the background image and opacity of the pseudo-element */
+div::before {
+  background-image: url(logo.jpeg);
+  opacity: 0.03;
+}
+
+/* Make the pseudo-element cover the entire parent element */
+div::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
 }
-.bg {
-  /* The image used */
-  background-image: url("logo.jpeg");
 
-  /* Half height */
-  height: 500px;
+/* Make sure the pseudo-element is behind the content */
+div::before {
+  z-index: -1;
+}
 
-  /* Center and scale the image nicely */
-  background-position: center;
+div::before {
+  background-position: center center;
+}
+div::before {
   background-repeat: no-repeat;
-  background-size: 500px;
 }
