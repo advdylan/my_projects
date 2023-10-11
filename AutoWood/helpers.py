@@ -99,6 +99,8 @@ def impdb():
     engine = create_engine('sqlite:///autowood.db')
     df.to_sql('stockroom', con=engine)
 
+def count_days():
+    
 
 
 
