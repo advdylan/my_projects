@@ -9,12 +9,14 @@ import cv2
 
 import pandas as pd
 from sqlalchemy import create_engine
+from cs50 import SQL
 from pdf2image import convert_from_path
 from glob import glob
 from pyzbar import pyzbar
 from flask import redirect, render_template, session
 from functools import wraps
 
+db = SQL("sqlite:///autowood.db")
 
 
 def apology(message, code=400):
@@ -98,10 +100,6 @@ def impdb():
     df = pd.read_excel('sekwojaean.xls')
     engine = create_engine('sqlite:///autowood.db')
     df.to_sql('stockroom', con=engine)
-
-def count_days():
-    
-
 
 
 

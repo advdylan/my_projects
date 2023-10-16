@@ -166,6 +166,11 @@ def ordersweek():
     if request.method == "GET":
         return render_template("ordersweek.html", week_list = week_list)
     
+
+
+
+    
+
     
 @app.route("/orders", methods=["GET", "POST"])
 @login_required
@@ -173,6 +178,7 @@ def orders():
 
     orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN"')
 
+    #prod_status  = db.execute("SELECT P,T,N,S,O FROM production WHERE ")
     if request.method == "GET":
         return render_template("orders.html")
     if request.method == "POST":
