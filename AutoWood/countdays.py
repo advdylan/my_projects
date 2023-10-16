@@ -25,12 +25,23 @@ def countdays():
 
     prod_status  = db.execute("SELECT P,T,N,S,O,EAN_CODE FROM production;")
     #print(prod_status)
-    empty = []
-    done = []
-    for EAN_CODE in prod_status:
-        EAN_ID = []
-        EAN_ID.append["EAN_CODE"]
-        print(EAN_CODE["EAN_CODE"])
+
+    keys = ['ean', 'empty', 'done']
+    order = dict.fromkeys(keys)
+    done = 0
+    fails = 0
+    for d in prod_status:
+        for value in d.values():
+            if value == 0:
+                fails += 1
+            elif value == 1:
+                done += 1
+        order['ean'] = d['EAN_CODE']
+        order['empty'] = fails
+        order['done'] = done
+
+    print(f"Fails: {fails}, done: {done}")
+    print(order)
         
 
 
