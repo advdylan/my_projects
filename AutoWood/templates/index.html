@@ -4,5 +4,52 @@
     Home
 {% endblock %}
 
+
+
 {% block main %}
+<div class="d-flex justify-content-center">
+<div class="card-group"style="width: 55rem;">
+    <div class="card">
+      <img class="card-img-top" src="{{url_for('static', filename='orders.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <p class="card-text">Managing orders system. Before using Ean-Reader function, make sure to attach barcodes file</p>
+        <a href="/ordersweek" class="btn btn-primary">List of orders</a>
+        <p></p>
+        <a href="/insert" class="btn btn-primary">Insert an order</a>  
+        <p></p>
+        <a href="/eanreader" class="btn btn-primary">EAN-READER</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Auto-Wood 2023</small>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="{{url_for('static', filename='warehouse.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+
+        <p class="card-text">Managing the warehouse</p>
+        <a href="/warehouse" class="btn btn-primary">Warehouse</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Auto-Wood 2023</small>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="{{url_for('static', filename='production.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        <a href="/production" class="btn btn-primary">Production</a>
+        <p></p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Auto-Wood 2023</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+    
 {% endblock %}

@@ -51,6 +51,9 @@ div::before {
   background-image: url(logo.jpeg);
   opacity: 0.03;
 }
+div::before {
+  background-color: transparent !important;
+}
 
 /* Make the pseudo-element cover the entire parent element */
 div::before {
@@ -71,4 +74,15 @@ div::before {
 }
 div::before {
   background-repeat: no-repeat;
+}
+
+.card-body {
+  background-color: rgb(238, 240, 230);
+  align-items: center;
+  justify-content: center;
+}
+
+.card-group{
+  width: 70%;
+
 }
