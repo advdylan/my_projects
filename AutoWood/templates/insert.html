@@ -21,7 +21,6 @@
         <div class = "form-group">
         <label for="EAN" class="form-label" class="text-black-50">EAN code: </label>
         <input class="form-control form-control-lg" placeholder="EAN code" id="eanchosen" name="eanchosen" type="text" list="eans" />
-        <label for="week" class="form-label" class="text-black-50">Week: </label>
         <datalist id = "eans">
             {% for dict_item in eans  %}
           <option>{{ dict_item['Kod EAN'] }}</option>
