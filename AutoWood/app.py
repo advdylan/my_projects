@@ -177,6 +177,15 @@ def orders():
         production_week = request.form.get("showorder")
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         status = countdays()
+        #print(orders)
+        #print(status)
+        status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
+
+        for order in orders:
+            if order['EAN_CODE'] in status_dict:
+                order['status'] = status_dict[order['EAN_CODE']]
+        print(orders)
+
         return render_template("orders.html", orders = orders,status = status)
 
 
@@ -197,6 +206,7 @@ def delete_row():
         row_id = request.form.get("indexcode")
         flash("Success", "success")
         db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
+        db.execute("DELETE FROM production WHERE EAN_CODE = ?", row_id)
         return jsonify({"message": "Success"}), 200
     
 @app.route("/delete_wrow", methods =["POST"])

@@ -17,6 +17,7 @@
           <th scope="col">Wood</th>
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
+          <th scope="col">Status</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
           </tr>
@@ -32,6 +33,7 @@
               <td>{{ dict_item['Rodzaj drewna'] }}</td>
               <td>{{ dict_item['Symbol'] }}</td>
               <td>{{ dict_item['date'] }}</td>
+              <td>{{ dict_item['status'] }}</td>
               <td>
                 <form action="/delete_row" method="post">
                   <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
