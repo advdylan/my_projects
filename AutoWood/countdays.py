@@ -24,26 +24,15 @@ db = SQL("sqlite:///autowood.db")
 def countdays():
 
     prod_status  = db.execute("SELECT P,T,N,S,O,EAN_CODE FROM production;")
-    #print(prod_status)
+    status = []
+    for i in range(len(prod_status)):
+        for data in prod_status:
+           suma = 0
+           for key, value in prod_status[i].items():
+            if key != "EAN_CODE":
+                suma += value
+           data = {prod_status[i]['EAN_CODE']:suma}
+        status.append(data)
+    return status
 
-    keys = ['ean', 'empty', 'done']
-    order = dict.fromkeys(keys)
-    done = 0
-    fails = 0
-    for d in prod_status:
-        for value in d.values():
-            if value == 0:
-                fails += 1
-            elif value == 1:
-                done += 1
-        order['ean'] = d['EAN_CODE']
-        order['empty'] = fails
-        order['done'] = done
-
-    print(f"Fails: {fails}, done: {done}")
-    print(order)
-        
-
-
-
-countdays()
+ 

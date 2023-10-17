@@ -16,6 +16,7 @@ from datetime import datetime, date
 
 
 from helpers import login_required, apology, decode, impdb
+from countdays import countdays
 
 UPLOAD_FOLDER = os.path.join('csvfiles')
 
@@ -65,7 +66,6 @@ def eanreader():
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    
     return render_template("index.html")
 
 @app.route('/uploader')
@@ -86,10 +86,6 @@ def uploader():
 
         return redirect("/show_data")
     return redirect("/show_data")
-
-
-#@app.route("/orders")
-#def showData():
 
 @app.route("/production", methods=["GET", "POST"])
 @login_required
@@ -166,11 +162,7 @@ def ordersweek():
     if request.method == "GET":
         return render_template("ordersweek.html", week_list = week_list)
     
-
-
-
     
-
     
 @app.route("/orders", methods=["GET", "POST"])
 @login_required
@@ -184,7 +176,8 @@ def orders():
     if request.method == "POST":
         production_week = request.form.get("showorder")
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
-        return render_template("orders.html", orders = orders)
+        status = countdays()
+        return render_template("orders.html", orders = orders,status = status)
 
 
 @app.route("/update_checkbox", methods = ["POST"])
