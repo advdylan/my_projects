@@ -17,7 +17,7 @@
           <th scope="col">Wood</th>
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
-          <th scope="col">Status</th>
+          <th scope="col">----Status----</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
           </tr>
@@ -33,7 +33,36 @@
               <td>{{ dict_item['Rodzaj drewna'] }}</td>
               <td>{{ dict_item['Symbol'] }}</td>
               <td>{{ dict_item['date'] }}</td>
-              <td>{{ dict_item['status'] }}</td>
+              {% if dict_item['status'] == 0 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
+              {% if dict_item['status'] == 1 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
+              {% if dict_item['status'] == 2 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 40%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
+              {% if dict_item['status'] == 3 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
+              {% if dict_item['status'] == 4 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 80%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
+              {% if dict_item['status'] == 5 %}
+              <td> <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> </td>
+              {% endif %}
               <td>
                 <form action="/delete_row" method="post">
                   <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
