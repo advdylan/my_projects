@@ -169,10 +169,13 @@ def ordersweek():
 def orders():
 
     orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN"')
-    post_data = session.get('post_data', {})
+
     #prod_status  = db.execute("SELECT P,T,N,S,O FROM production WHERE ")
     if request.method == "GET":
-        production_week = request.form.get("showorder")
+        post_data = session.get('post_data', {})
+        production_week = post_data['showorder']
+        print(production_week)
+
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         status = countdays()
         status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
@@ -180,10 +183,14 @@ def orders():
         for order in orders:
             if order['EAN_CODE'] in status_dict:
                 order['status'] = status_dict[order['EAN_CODE']]
+
+        return render_template("orders.html", orders = orders,status = status)
         
-        return render_template("orders.html", orders = orders, status = status)
+        return render_template("orders.html", data = post_data)
     if request.method == "POST":
         production_week = request.form.get("showorder")
+        session['post_data'] = request.form.to_dict() # saves the showorder variable into post to use on GET function
+
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         status = countdays()
         status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
@@ -210,10 +217,10 @@ def delete_row():
 
     if request.method == "POST":
         row_id = request.form.get("indexcode")
-        flash("Success", "success")
+        flash("DELETED", "success")
         db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
         db.execute("DELETE FROM production WHERE EAN_CODE = ?", row_id)
-        return jsonify({"message": "Success"}), 200
+        return redirect("/orders")
     
 @app.route("/delete_wrow", methods =["POST"])
 @login_required
