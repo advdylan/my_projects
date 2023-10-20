@@ -158,7 +158,7 @@ def insertorder():
 def ordersweek():
 
     week_list = db.execute("SELECT DISTINCT week FROM orders")
-
+    session['post_data'] = request.form.to_dict()
     if request.method == "GET":
         return render_template("ordersweek.html", week_list = week_list)
     
@@ -169,22 +169,28 @@ def ordersweek():
 def orders():
 
     orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN"')
-
+    post_data = session.get('post_data', {})
     #prod_status  = db.execute("SELECT P,T,N,S,O FROM production WHERE ")
     if request.method == "GET":
-        return render_template("orders.html")
-    if request.method == "POST":
         production_week = request.form.get("showorder")
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         status = countdays()
-        #print(orders)
-        #print(status)
         status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
 
         for order in orders:
             if order['EAN_CODE'] in status_dict:
                 order['status'] = status_dict[order['EAN_CODE']]
-        print(orders)
+        
+        return render_template("orders.html", orders = orders, status = status)
+    if request.method == "POST":
+        production_week = request.form.get("showorder")
+        orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
+        status = countdays()
+        status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
+
+        for order in orders:
+            if order['EAN_CODE'] in status_dict:
+                order['status'] = status_dict[order['EAN_CODE']]
 
         return render_template("orders.html", orders = orders,status = status)
 
@@ -228,7 +234,7 @@ def sendtoproduction():
         week = request.form.get("week")
         flash("Success", "success")
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD, P, T, N, S, O) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 0)", row_id, current_date, week, zd)
-        return jsonify({"message": "Success"}), 200
+        return redirect("/orders")
 
 @app.route("/insert", methods=["GET", "POST"])
 @login_required

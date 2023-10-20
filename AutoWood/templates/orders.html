@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block main %}
+
 <div class="tables">
+  
   <table id="data" class="table table-sm table-bordered table-hover ">
       <thead>
           <tr class="table-dark table-hover">
@@ -75,11 +77,25 @@
                   <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
                   <input type="hidden" name="week" value="{{ dict_item['week'] }}">
                   <button type="submit" class="btn btn-outline-success">SEND TO PRODUCTION</button>
+
+
               </form>
               </td>
           </tr> 
           {% endfor %}
- 
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-dismissible alert-{{ category }}">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>{{ category.upper() }}</strong>: {{ message }} <!-- Display the message here -->
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
           
       </tbody>
       </table>
@@ -105,7 +121,7 @@
                       type: "POST",
                       data: jq(this).serialize(),
                       success: function(response){
-                          alert("Success");
+                        alert(response.message);
                       }
                   });
               });
