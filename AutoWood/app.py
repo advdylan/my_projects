@@ -283,7 +283,19 @@ def database():
     
     if request.method == "POST":
         if request.form['submit_button'] == 'komody':
-            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = (Komody)')
+            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = "Komody"')
+            return render_template("database.html", database = database)
+        
+        elif request.form['submit_button'] == 'niskie':
+            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = "Łóżka niskie"')
+            return render_template("database.html", database = database)
+        
+        elif request.form['submit_button'] == 'szafki':
+            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = "Szafki nocne"')
+            return render_template("database.html", database = database)
+        
+        elif request.form['submit_button'] == 'wysokie':
+            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = "Łóżka High / Max"')
             return render_template("database.html", database = database)
 
 
