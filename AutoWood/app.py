@@ -282,8 +282,9 @@ def database():
         return render_template("database.html", database = database)
     
     if request.method == "POST":
-        
-        return render_template("database.html", database = database)
+        if request.form['submit_button'] == 'komody':
+            database = db.execute('SELECT * FROM sekwojaean WHERE "Nazwa kategorii" = (Komody)')
+            return render_template("database.html", database = database)
 
 
 if __name__ == '__main__':
