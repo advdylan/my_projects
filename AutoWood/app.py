@@ -230,7 +230,8 @@ def delete_wrow():
         row_id = request.form.get("indexcode")
         db.execute("DELETE FROM warehouse WHERE EAN_CODE = ?", row_id)
         return redirect("/warehouse")
-    
+
+
 @app.route("/sendtoproduction", methods =["POST"])
 @login_required
 def sendtoproduction():
@@ -271,6 +272,20 @@ def warehouse():
     warehouse = db.execute('SELECT * FROM warehouse JOIN sekwojaean ON warehouse.EAN_CODE = sekwojaean."Kod EAN"')
     return render_template("warehouse.html", warehouse=warehouse)
 
+    
+@app.route("/database", methods =["GET", "POST"])
+@login_required
+def database():
+
+    if request.method == "GET":
+        database = db.execute("SELECT * FROM sekwojaean;")
+        return render_template("database.html", database = database)
+    
+    if request.method == "POST":
+        
+        return render_template("database.html", database = database)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
@@ -286,11 +301,11 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return redirect("/")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return redirect("/")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
