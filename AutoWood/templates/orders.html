@@ -82,11 +82,12 @@
               </form>
               </td>
               <td>
+                <form class="sendtoproduction" action="/sendtowarehouse" method="post">
                 <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
                 <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
                 <input type="hidden" name="week" value="{{ dict_item['week'] }}">
-                <form class="sendtoproduction" action="/sendtowarehouse" method="post"></form>
                 <button type="submit" class="btn btn-outline-success">SEND TO WAREHOUSE</button>
+              </form>
               </td>
           </tr> 
           {% endfor %}
