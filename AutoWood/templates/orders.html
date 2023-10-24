@@ -22,6 +22,7 @@
           <th scope="col">----Status----</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
+          <th scope="col">FINISH</th>
           </tr>
       </thead>
       <tbody>
@@ -76,10 +77,16 @@
                   <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
                   <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
                   <input type="hidden" name="week" value="{{ dict_item['week'] }}">
-                  <button type="submit" class="btn btn-outline-success">SEND TO PRODUCTION</button>
-
-
+                  <button type="submit" class="btn btn-outline-warning">SEND TO PRODUCTION</button>
+                  
               </form>
+              </td>
+              <td>
+                <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
+                <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
+                <input type="hidden" name="week" value="{{ dict_item['week'] }}">
+                <form class="sendtoproduction" action="/sendtowarehouse" method="post"></form>
+                <button type="submit" class="btn btn-outline-success">SEND TO WAREHOUSE</button>
               </td>
           </tr> 
           {% endfor %}
@@ -89,7 +96,7 @@
 {% for category, message in messages %}
 <div class="alert alert-dismissible alert-{{ category }}">
   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  <strong>{{ category.upper() }}</strong>: {{ message }} <!-- Display the message here -->
+  <strong>{{ category.upper() }}</strong>: {{ message }}
 </div>
 {% endfor %}
 {% endif %}

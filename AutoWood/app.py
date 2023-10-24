@@ -170,7 +170,6 @@ def orders():
 
     orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN"')
 
-    #prod_status  = db.execute("SELECT P,T,N,S,O FROM production WHERE ")
     if request.method == "GET":
         post_data = session.get('post_data', {})
         production_week = post_data['showorder']
@@ -186,7 +185,6 @@ def orders():
 
         return render_template("orders.html", orders = orders,status = status)
         
-        return render_template("orders.html", data = post_data)
     if request.method == "POST":
         production_week = request.form.get("showorder")
         session['post_data'] = request.form.to_dict() # saves the showorder variable into post to use on GET function
@@ -242,6 +240,19 @@ def sendtoproduction():
         week = request.form.get("week")
         flash("Success", "success")
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD, P, T, N, S, O) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 0)", row_id, current_date, week, zd)
+        return redirect("/orders")
+    
+@app.route("/sendtowarehouse", methods =["POST"])
+@login_required
+def sendtowarehouse():
+    if request.method == "POST":
+        row_id = request.form.get("indexcode")
+ 
+        flash("Success", "success")
+        db.execute("INSERT INTO warehouse (EAN_CODE) VALUES (?)", row_id)
+        db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
+        db.execute("DELETE FROM production WHERE EAN_CODE = ?", row_id)
+
         return redirect("/orders")
 
 @app.route("/insert", methods=["GET", "POST"])
