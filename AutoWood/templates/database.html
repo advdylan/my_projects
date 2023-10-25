@@ -12,13 +12,13 @@
 <form action="/database" method="post">
 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
-    <button class="btn btn-dark" type="submit" name="submit_button" id = "komody" value = "komody">Komody</button>
+    <button class="btn btn-dark" type="submit" name="submit_button" id = "komody" data-type = "KOMODY" value = "komody">Komody</button>
 
-    <button class="btn btn-dark" type="submit" name="submit_button" id = "niskie" value = "niskie">Łóżka niskie</button>
+    <button class="btn btn-dark" type="submit" name="submit_button" id = "niskie" data-type = "NISKIE" value = "niskie">Łóżka niskie</button>
 
-    <button class="btn btn-dark" type="submit" name="submit_button" id = "wysokie" value = "wysokie">Łóżka wysokie</button>
+    <button class="btn btn-dark" type="submit" name="submit_button" id = "wysokie" data-type = "WYSOKIE" value = "wysokie">Łóżka wysokie</button>
 
-    <button class="btn btn-dark" type="submit" name="submit_button" id = "szafki" value = "szafki">Szafki</button>
+    <button class="btn btn-dark" type="submit" name="submit_button" id = "szafki" data-type = "SZAFKI" value = "szafki">Szafki</button>
 </div>
 </form>
 
@@ -66,8 +66,27 @@
           $('#data').DataTable();
         });
 
-      </script>
 
+        let buttons = document.querySelectorAll('button');
+        let head = document.querySelector('h1');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let storedValue = localStorage.getItem('h1');
+            if (storedValue) {
+                head.innerHTML = storedValue;
+            }
+
+            buttons.forEach(button => {
+                button.onclick = () => {
+                    let buttonType = button.dataset.type;
+                    localStorage.setItem('h1', buttonType);
+                    head.innerHTML = buttonType;
+                }
+            });
+        });
+
+      </script>
+ 
       {% endblock %}
 </div>
 
