@@ -47,10 +47,26 @@
                   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                  <div id = "order-data" contenteditable="true">
+                  <div id = "order-data {{ dict_item['EAN_CODE'] }}" contenteditable="true">
                     Please write a message for this order.
                   </div>
+                  <form style="padding: 5%;" class="save_notes" action="/notes" method="post">
+                    <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
+                    <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
+                    <input type="hidden" name="week" value="{{ dict_item['week'] }}">
+                    <button type="submit" class="btn btn-outline-primary">Save notes</button>
+                    
+                </form>
+
                 </div>
+                <script>
+
+                  document.addEventListener('DOMContentLoaded', () =>{
+                    let notes_id = "{{ dict_item['EAN_CODE'] }}";
+                    console.log(notes_id);
+                  });
+                </script>
+
               </div></button></td>
               {% if dict_item['status'] == 0 %}
               <td> <div class="progress">
@@ -151,12 +167,7 @@
               });
           });
           </script>
-          <script>
 
-            document.addEventListener('DOMContentLoaded', () =>{
-              let notes = document.querySelector
 
-            });
-          </script>
 
 {% endblock %}
