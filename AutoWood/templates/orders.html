@@ -48,7 +48,7 @@
                 </div>
                 <div class="offcanvas-body">
                   <div id = "order-data {{ dict_item['EAN_CODE'] }}" contenteditable="true">
-                    Please write a message for this order.
+                    {{ dict_item['notes'] }}
                   </div>
                   <form style="padding: 5%;" class="save_notes" action="/notes" method="post">
                     <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
