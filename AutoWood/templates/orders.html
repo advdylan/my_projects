@@ -19,7 +19,8 @@
           <th scope="col">Wood</th>
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
-          <th scope="col">----Status----</th>
+          <th scole="col">Notes</th>
+          <th scope="col">Status</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
           <th scope="col">FINISH</th>
@@ -36,6 +37,21 @@
               <td>{{ dict_item['Rodzaj drewna'] }}</td>
               <td>{{ dict_item['Symbol'] }}</td>
               <td>{{ dict_item['date'] }}</td>
+              <td>
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas{{ dict_item['EAN_CODE'] }}" aria-controls="offcanvas{{ dict_item['EAN_CODE'] }}">
+                Notes
+              </button>
+              <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas{{ dict_item['EAN_CODE'] }}" aria-labelledby="offcanvas{{ dict_item['EAN_CODE'] }}Label">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvas{{ dict_item['EAN_CODE'] }}Label">Note for order {{ dict_item['ZD'] }}</h5>
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <div id = "order-data" contenteditable="true">
+                    Please write a message for this order.
+                  </div>
+                </div>
+              </div></button></td>
               {% if dict_item['status'] == 0 %}
               <td> <div class="progress">
                 <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -134,6 +150,13 @@
                   });
               });
           });
+          </script>
+          <script>
+
+            document.addEventListener('DOMContentLoaded', () =>{
+              let notes = document.querySelector
+
+            });
           </script>
 
 {% endblock %}
