@@ -101,19 +101,20 @@ def production():
 @login_required
 def productiontable():
 
+    week_list = db.execute("SELECT DISTINCT week FROM orders")
+
     if request.method == "GET":
         return render_template("productiontable.html")
     if request.method == "POST":
         production_week = request.form.get("show")
         orders = db.execute('SELECT * FROM production JOIN sekwojaean ON production.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
-        return render_template("productiontable.html", orders = orders)
+        return render_template("productiontable.html", orders = orders, week_list = week_list)
     
 @app.route("/submit_changes", methods=["POST"])
 @login_required
 def update_table():
     if request.method == "POST":
         production_week = request.form.get("production_week")
-        print(production_week)
         # Get the values of the checked checkboxes
         p = request.form.get('P')
         # Update the values in the database
