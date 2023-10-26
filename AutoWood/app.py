@@ -248,8 +248,9 @@ def notes():
     if request.method == "POST":
         row_id = request.form.get("indexcode") 
         new_note = request.form.get("notes")
+        print(row_id)
         print(new_note)
-        db.execute("UPDATE orders SET notes = ? WHERE id = ?", new_note, row_id)
+        db.execute("UPDATE orders SET notes = ? WHERE EAN_CODE = ?", new_note, row_id)
         return redirect("/orders")
     
 @app.route("/sendtowarehouse", methods =["POST"])
