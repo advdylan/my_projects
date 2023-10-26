@@ -242,6 +242,16 @@ def sendtoproduction():
         db.execute("INSERT INTO production (EAN_CODE, date, week, ZD, P, T, N, S, O) VALUES (?, ?, ?, ?, 0, 0, 0, 0, 0)", row_id, current_date, week, zd)
         return redirect("/orders")
     
+@app.route("/notes", methods =["POST"])
+@login_required
+def notes():
+    if request.method == "POST":
+        row_id = request.form.get("indexcode") 
+        new_note = request.form.get("notes")
+        print(new_note)
+        db.execute("UPDATE orders SET notes = ? WHERE id = ?", new_note, row_id)
+        return redirect("/orders")
+    
 @app.route("/sendtowarehouse", methods =["POST"])
 @login_required
 def sendtowarehouse():
