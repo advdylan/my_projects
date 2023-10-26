@@ -21,8 +21,8 @@
           <th scope="col">Wood</th>
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
-          <th scole="col">Notes</th>
-          <th scope="col">Status</th>
+          <th scope="col">Notes</th>
+          <th style="width: 40px;" scope="col">Status</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
           <th scope="col">FINISH</th>
@@ -30,7 +30,14 @@
       </thead>
       <tbody>
           {% for dict_item in orders %}
-          <tr class="table-light table-hover">
+          {% if dict_item['status'] == 0 %}
+          <tr class="table-danger table-hover">
+          {% elif dict_item['status'] == 5%}
+          <tr class="table-success table-hover">
+          {% else %}
+          <tr class="table-primary table-hover">
+
+          {% endif %}
               <td>{{ dict_item['ZD'] }}</td>
               <td>{{ dict_item['Nazwa w sklepie'] }}</td>
               <td>{{ dict_item['Nazwa kategorii'] }}</td>
@@ -51,13 +58,12 @@
                 <div class="offcanvas-body">
                   <form class="save_notes" action="/notes" method="post">
                   <div  class="form-group">
-                    <label class="col-form-label mt-4" for="Notes">Notes</label>
                     <input type="text" class="form-control" placeholder="Please leave a note for order {{ dict_item['ZD'] }} " id="notes" name="notes">
                   </div>
                     <input type="hidden" name="indexcode" value="{{ dict_item['Kod EAN'] }}">
                     <input type="hidden" name="ZD" value="{{ dict_item['ZD'] }}">
                     <input type="hidden" name="week" value="{{ dict_item['week'] }}">
-                    <button  type="submit" class="btn btn-outline-primary">Save notes</button>
+                    <button  type="submit" class="btn btn-outline-primary">Save</button>
                   </form>
                   <div class="card border-primary mb-3">
                     <div class="card-header">Notes</div>
