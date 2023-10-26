@@ -42,6 +42,15 @@
   color:rgb(255, 0, 0);  
   } 
 
+  
+  .form-group {
+    padding: 10px; 
+}
+
+.card {
+  margin: 10px; 
+}
+
 
 /* Set the background image and opacity of the pseudo-element */
 /*
