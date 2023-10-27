@@ -3,6 +3,7 @@ import pandas as pd
 import cv2
 import barcode
 
+from PIL import Image, ImageDraw, ImageFont
 from barcode.writer import ImageWriter
 from barcode import generate
 from glob import glob
@@ -46,6 +47,38 @@ def after_request(response):
     return response
 
 
+
+
+@app.route("/generatebarcode", methods = ["GET", "POST"])
+@login_required
+def generatebarcode():
+
+    number = "5902273651888"
+    barcode_data = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ? ', number)
+    text = str(barcode_data)
+    print(text)
+
+
+
+    barcode_format = barcode.get_barcode_class("EAN13")
+    new_barcode = barcode_format(number, writer=ImageWriter())
+
+    filename = f"{number}.png"
+    new_barcode.save(filename)
+
+    with Image.open(filename) as barcode_img:
+        img = Image.new('RGB', (barcode_img.width + 300, barcode_img.height + 400), 'white')
+        d = ImageDraw.Draw(img)
+
+        img.paste(barcode_img, (0,400))
+
+        font = ImageFont.load_default()
+        d.text((10, barcode_img.height + 100), text, font=font, fill=(0,0,0))
+    
+    img.save(f'etykieta-{number}.png', 'PNG')
+
+    return redirect("/")
+
 @app.route("/eanreader", methods=["GET", "POST"])
 @login_required
 def eanreader():
@@ -63,18 +96,6 @@ def eanreader():
     
         
     return render_template("eanreader.html", eans=eans)
-
-@app.route("/generatebarcode", methods = ["GET", "POST"])
-@login_required
-def generatebarcode(number):
-
-    barcode_format = barcode.get_barcode_class("EAN13")
-    new_barcode = barcode_format(number, writer=ImageWriter())
-
-    filename = f"{number}"
-    new_barcode.save(filename)
-
-    return redirect("/")
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
