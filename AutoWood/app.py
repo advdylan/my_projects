@@ -1,8 +1,10 @@
 import os
 import pandas as pd
 import cv2
+import barcode
 
-
+from barcode.writer import ImageWriter
+from barcode import generate
 from glob import glob
 from pyzbar import pyzbar
 from cs50 import SQL
@@ -62,6 +64,17 @@ def eanreader():
         
     return render_template("eanreader.html", eans=eans)
 
+@app.route("/generatebarcode", methods = ["GET", "POST"])
+@login_required
+def generatebarcode(number):
+
+    barcode_format = barcode.get_barcode_class("EAN13")
+    new_barcode = barcode_format(number, writer=ImageWriter())
+
+    filename = f"{number}"
+    new_barcode.save(filename)
+
+    return redirect("/")
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
