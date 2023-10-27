@@ -55,9 +55,11 @@ def generatebarcode():
 
     number = "5902273651888"
     barcode_data = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ? ', number)
-    print(barcode_data)
-
-
+    data = barcode_data[0]
+    nazwa = data['Nazwa w sklepie']
+    wymiary = data['Wymiary']
+    kolor = f"{data['Rodzaj drewna']} {data['Kolor drewna']}"
+  
     barcode_format = barcode.get_barcode_class("EAN13")
     new_barcode = barcode_format(number, writer=ImageWriter())
 
@@ -73,10 +75,10 @@ def generatebarcode():
         logo = Image.open('static\login.jpg')
         img.paste(logo, (450, 400))
 
-        txt_x = (barcode_img.width)/2
 
-        font = ImageFont.truetype("arial.ttf", 25)
-        d.text((txt_x, 10), "Dzin dybry Twoja stara text", font=font, fill=(0,0,0))
+        font = ImageFont.truetype("arial.ttf", 20)
+        d.text((10, 10), nazwa , font=font, fill=(0,0,0))
+        d.multiline_text((10, 10), f"\n \n {wymiary} \n \n {kolor}" , font=font, fill=(0,0,0))
 
     
     img.save(f'etykieta-{number}.png', 'PNG')
