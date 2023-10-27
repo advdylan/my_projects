@@ -76,7 +76,8 @@ def generatebarcode():
         txt_x = (barcode_img.width)/2
 
         font = ImageFont.truetype("arial.ttf", 25)
-        d.text((txt_x, 10), "Dzin dybry", font=font, fill=(0,0,0))
+        d.text((txt_x, 10), "Dzin dybry Twoja stara text", font=font, fill=(0,0,0))
+
     
     img.save(f'etykieta-{number}.png', 'PNG')
 
