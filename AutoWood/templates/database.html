@@ -38,6 +38,7 @@
           <th scope="col">Pack I</th>
           <th scope="col">Pack II</th>
           <th scope="col">Pack III</th>
+          <th scope="col">GENERATE BARCODE</th>
           </tr>
       </thead>
       <tbody>
@@ -55,6 +56,13 @@
               <td>{{ dict_item['Paczka I'] }}</td>
               <td>{{ dict_item['Paczka II'] }}</td>
               <td>{{ dict_item['Paczka III'] }}</td> 
+              <td> 
+                
+                <form action = "/generatebarcode" method="POST">
+                    <input type="submit" value=" {{ dict_item['Kod EAN'] }}" id = "number" name = "number">
+                </form>
+                <img src = "static/ean-13.jpg">
+              </td> 
           </tr> 
           {% endfor %}
           

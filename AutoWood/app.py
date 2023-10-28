@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import cv2
 import barcode
+import time
 
 from PIL import Image, ImageDraw, ImageFont
 from barcode.writer import ImageWriter
@@ -33,6 +34,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+os.makedirs('orders', exist_ok=True)
 
 Session(app)
 
@@ -53,44 +55,50 @@ def after_request(response):
 @login_required
 def generatebarcode():
 
-    number = "5902273651888"
-    barcode_data = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ? ', number)
-    data = barcode_data[0]
-    nazwa = data['Nazwa w sklepie']
-    wymiary = data['Wymiary']
-    kolor = f"{data['Rodzaj drewna']} {data['Kolor drewna']}"
-  
-    barcode_format = barcode.get_barcode_class("EAN13")
-    new_barcode = barcode_format(number, writer=ImageWriter())
+    if request.method == "POST":   
 
-    filename = f"{number}.png"
-    new_barcode.save(filename)
-
-    with Image.open(filename) as barcode_img:
-        img = Image.new('RGB', (barcode_img.width + 300, barcode_img.height + 400), 'white')
-        d = ImageDraw.Draw(img)
-
-        img.paste(barcode_img, (-50,400))
-
-        logo = Image.open('static\login.jpg')
-        img.paste(logo, (450, 400))
-
-
-        font = ImageFont.truetype("arial.ttf", 20)
-        d.text((10, 10), nazwa , font=font, fill=(0,0,0))
-        d.multiline_text((10, 10), f"\n \n {wymiary} \n \n {kolor}" , font=font, fill=(0,0,0))
-
+        number = request.form.get("number")
+        number = number.strip(" ")
+        print(number)
+        barcode_data = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ? ', number)
+        data = barcode_data[0]
+        nazwa = data['Nazwa w sklepie']
+        wymiary = data['Wymiary']
+        kolor = f"{data['Rodzaj drewna']} {data['Kolor drewna']}"
     
-    img.save(f'etykieta-{number}.png', 'PNG')
+        barcode_format = barcode.get_barcode_class("EAN13")
+        new_barcode = barcode_format(number, writer=ImageWriter())
 
-    return redirect("/")
+        filename = number
+        new_barcode.save(filename)
+
+        time.sleep(1)
+
+        with Image.open(f'{filename}.png') as barcode_img:
+            img = Image.new('RGB', (barcode_img.width + 300, barcode_img.height + 400), 'white')
+            d = ImageDraw.Draw(img)
+
+            img.paste(barcode_img, (-50,400))
+
+            logo = Image.open('static/login.jpg')
+            img.paste(logo, (450, 400))
+
+
+            font = ImageFont.truetype("arial.ttf", 20)
+            d.text((10, 10), nazwa , font=font, fill=(0,0,0))
+            d.multiline_text((10, 10), f"\n \n {wymiary} \n \n {kolor}" , font=font, fill=(0,0,0))
+
+        
+        img.save(f'orders/etykieta-{number}.png', 'PNG')
+
+        return Response(status=204)
 
 @app.route("/eanreader", methods=["GET", "POST"])
 @login_required
 def eanreader():
 
     eans = []
-    barcodes = glob("orders/barcode*.png")
+    barcodes = glob("orders/*************.png")
     for barcode_file in barcodes:
         img = cv2.imread(barcode_file)
         img, orders = decode(img)
