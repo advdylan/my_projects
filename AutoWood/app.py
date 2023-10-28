@@ -111,6 +111,13 @@ def eanreader():
         
     return render_template("eanreader.html", eans=eans)
 
+
+@app.route("/addorder", methods=["GET", "POST"])
+@login_required
+def addorder():
+
+    return Response(status=204)
+
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():

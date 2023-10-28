@@ -12,23 +12,40 @@
             <tr class="table-dark table-hover">
             <th scope="col">Index</th>
             <th scope="col">Name</th>
-            <th scope="col">Category</th>
             <th scope="col">Size</th>
             <th scope="col">Color</th>
             <th scope="col">Type of wood</th>
             <th scope="col">EAN</th>
+            <th class="col-sm-5" scope="col">Notes</th>
+            <th class="col-sm-1" scope="col">Week</th>
+            <th class="col-sm-1" scope="col">Add</th>
             </tr>
         </thead>
         <tbody>
             {% for dict_item in eans %}
-            <tr class="table-light table-hover">
+            <tr class="table-active table-hover">
                 <td>{{ dict_item['index'] }}</td>
                 <td>{{ dict_item['Nazwa w sklepie'] }}</td>
-                <td>{{ dict_item['Nazwa kategorii'] }}</td>
                 <td>{{ dict_item['Wymiary'] }}</td>
                 <td>{{ dict_item['Kolor drewna'] }}</td>
                 <td>{{ dict_item['Rodzaj drewna'] }}</td>
                 <td>{{ dict_item['Kod EAN'] }}</td>
+                <td> <div class="form-group">             
+                    <input type="text" class="form-control" placeholder="Notes" id="Notes">
+                  </div> </td>
+                <td>
+                    <form action="/addorder">
+                    <div class="form-group">   
+                        <input type="text" class="form-control" placeholder="Week" id="week">
+                        <input type="hidden" value = "{{ dict_item['Kod EAN']}}" id = "EAN" name = "EAN">   
+                    </div>         
+                         
+                    </form>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-success">Add order</button>
+        
+                </td>
             </tr> 
             {% endfor %}
             
