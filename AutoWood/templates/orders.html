@@ -22,7 +22,7 @@
           <th scope="col">Symbol</th>
           <th scope="col">Date</th>
           <th scope="col">Notes</th>
-          <th style="width: 40px;" scope="col">Status</th>
+          <th class="col-1" scope="col">Status</th>
           <th scope="col">DELETE</th>
           <th scope="col">SEND</th>
           <th scope="col">FINISH</th>
@@ -35,7 +35,7 @@
           {% elif dict_item['status'] == 5%}
           <tr class="table-success table-hover">
           {% else %}
-          <tr class="table-primary table-hover">
+          <tr class="table-default table-hover">
 
           {% endif %}
               <td>{{ dict_item['ZD'] }}</td>
