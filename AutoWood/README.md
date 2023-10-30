@@ -15,6 +15,7 @@ For the purpose of this project, I wrote code to import database from Excell XLS
 
 Orders is the main part of the application. Although the production process doesnt start here, all actions and status are visible here. 
 ![](https://github.com/advdylan/my_projects/blob/main/orders.jpg)
+Notes section allows to leave a note to a certain order. It's saved inside database. Status shows the production progress on every of the order. The table's row change it's color in 3 conditions. Whether the order is complete, not even started or in progress. DELETE function works for both production and orders tables. Send to production does transfer and order from order table to production table. It doesnt work automatically. The last function here is finish. It sends certain order to Warehouse on click. The order is removed from production and orders table and then beign added to warehouse table. 
 
  
 
