@@ -19,8 +19,8 @@
             <th class="col-sm-5" scope="col">Notes</th>
             </tr>
         </thead>
-        <form action="/addorder" method="POST">
-            <tbody>
+        <tbody>
+        <form action="/addorder" method="POST">        
                 {% for dict_item in eans %}
                 <tr class="table-active table-hover">
                     <td>{{ dict_item['index'] }}</td>
@@ -37,6 +37,7 @@
                     </td>
                 </tr> 
                 {% endfor %}
+ 
             </tbody>
             </table>
             <div class="row justify-content-center my-5">
@@ -45,7 +46,8 @@
                     <input type="hidden" id = "ean_list" name = "ean_list" value="{{ clean_codes }}">
                 </div>                                  
                 <button style="width: 20%;" type="submit" class="btn btn-primary">Add orders</button>
-            </div>    
+            </div> 
+   
         </form>
 
         {% block scripts %}

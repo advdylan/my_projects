@@ -122,7 +122,7 @@ def addorder():
 
     if request.method == "POST":
         week = request.form.get('week')
-        eans = request.form.get('clean_codes')
+        eans = request.form.get('ean_list')
         print(eans)
         for i in range(1, len(eans)+1):
             notes = request.form.get(f'Notes{i}')
