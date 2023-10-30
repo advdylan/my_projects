@@ -123,14 +123,7 @@ def addorder():
     if request.method == "POST":
         week = request.form.get('week')
         eans = request.form.get('ean_list')
-        print(eans)
-        for i in range(1, len(eans)+1):
-            notes = request.form.get(f'Notes{i}')
-            ean = request.form.get(f'EAN{i}')
-            print(notes)
-            print(ean)
 
-            return redirect("/eanreader")
 
 @app.route("/", methods=["GET", "POST"])
 @login_required

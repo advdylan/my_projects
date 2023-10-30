@@ -17,10 +17,11 @@
             <th scope="col">Type of wood</th>
             <th scope="col">EAN</th>
             <th class="col-sm-5" scope="col">Notes</th>
+            <th scope="col">Week</th>
+            <th class="col" scope="col">Add order</th>
             </tr>
         </thead>
         <tbody>
-        <form action="/addorder" method="POST">        
                 {% for dict_item in eans %}
                 <tr class="table-active table-hover">
                     <td>{{ dict_item['index'] }}</td>
@@ -30,24 +31,25 @@
                     <td>{{ dict_item['Rodzaj drewna'] }}</td>
                     <td>{{ dict_item['Kod EAN'] }}</td>
                     <td> 
+                        <form action="/addorder" method="POST"> 
                         <div class="form-group">             
                             <input type="text" class="form-control" placeholder="Notes" name="Notes{{ loop.index }}" id="Notes{{ loop.index }}">
                             <input type="hidden" id = "EAN{{ loop.index }}" name="EAN{{ loop.index }}" value="{{ dict_item['Kod EAN'] }}">
                         </div> 
                     </td>
+                    <td>          
+                                <input type="text" class="form-control" placeholder="Week" name="week" id = "week">
+                                <input type="hidden" id = "ean_list" name = "ean_list" value="{{ clean_codes }}">
+                            </div> 
+                    </td>
+                    <td>
+
+                        <button  type="submit" class="btn btn-primary">Add order</button>
+                    </td>
                 </tr> 
                 {% endfor %}
- 
-            </tbody>
-            </table>
-            <div class="row justify-content-center my-5">
-                <div class="col-lg-3">             
-                    <input type="text" class="form-control" placeholder="Week" name="week">
-                    <input type="hidden" id = "ean_list" name = "ean_list" value="{{ clean_codes }}">
-                </div>                                  
-                <button style="width: 20%;" type="submit" class="btn btn-primary">Add orders</button>
-            </div> 
-   
+         </tbody>
+            </table>                              
         </form>
 
         {% block scripts %}
