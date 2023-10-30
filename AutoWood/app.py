@@ -107,16 +107,30 @@ def eanreader():
 
         eans_request = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ?', order )
         eans.append(eans_request[0])
+        
+    clean_codes = []
+    for ean in eans:
+        clean_codes.append(ean['Kod EAN'])
     
         
-    return render_template("eanreader.html", eans=eans)
+    return render_template("eanreader.html", eans=eans, clean_codes = clean_codes)
 
 
-@app.route("/addorder", methods=["GET", "POST"])
+@app.route("/addorder", methods=["POST"])
 @login_required
 def addorder():
 
-    return Response(status=204)
+    if request.method == "POST":
+        week = request.form.get('week')
+        eans = request.form.get('clean_codes')
+        print(eans)
+        for i in range(1, len(eans)+1):
+            notes = request.form.get(f'Notes{i}')
+            ean = request.form.get(f'EAN{i}')
+            print(notes)
+            print(ean)
+
+            return redirect("/eanreader")
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
@@ -130,6 +144,7 @@ def upload_file():
 @app.route("/upload", methods=["GET", "POST"])
 @login_required
 def uploader():
+
     if request.method == "POST":
         f = request.files['file']
         data_filename = secure_filename(f.filename)
@@ -289,6 +304,7 @@ def delete_wrow():
 @app.route("/sendtoproduction", methods =["POST"])
 @login_required
 def sendtoproduction():
+
     if request.method == "POST":
         row_id = request.form.get("indexcode") 
         zd = request.form.get("ZD")
@@ -301,17 +317,17 @@ def sendtoproduction():
 @app.route("/notes", methods =["POST"])
 @login_required
 def notes():
+
     if request.method == "POST":
         row_id = request.form.get("indexcode") 
         new_note = request.form.get("notes")
-        print(row_id)
-        print(new_note)
         db.execute("UPDATE orders SET notes = ? WHERE EAN_CODE = ?", new_note, row_id)
         return redirect("/orders")
     
 @app.route("/sendtowarehouse", methods =["POST"])
 @login_required
 def sendtowarehouse():
+
     if request.method == "POST":
         row_id = request.form.get("indexcode")
  
