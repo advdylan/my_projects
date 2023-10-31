@@ -137,12 +137,16 @@ def addorder():
             flash("Wrong ZD number", "danger")
             return redirect("/eanreader")
         flash("Succes", "success" )
-        db.execute("INSERT INTO orders (EAN_CODE, date, week, zd) VALUES (?, ?, ?, ?)", ean, current_date, week, zd)
+        db.execute("INSERT INTO orders (EAN_CODE, date, week, zd, notes) VALUES (?, ?, ?, ?, ?)", ean, current_date, week, zd, note)
+
+        filename = f'etykieta-{ean}.png'
+        print(filename)
+
         return redirect("/eanreader")
 
         
 
-        return redirect("/")
+      
 
 
 @app.route("/", methods=["GET", "POST"])
