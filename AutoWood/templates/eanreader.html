@@ -16,7 +16,8 @@
             <th scope="col">Color</th>
             <th scope="col">Type of wood</th>
             <th scope="col">EAN</th>
-            <th class="col-sm-5" scope="col">Notes</th>
+            <th class="col-sm-1" scope="col">ZD</th>
+            <th class="col-sm-4" scope="col">Notes</th>
             <th scope="col">Week</th>
             <th class="col" scope="col">Add order</th>
             </tr>
@@ -30,13 +31,20 @@
                     <td>{{ dict_item['Kolor drewna'] }}</td>
                     <td>{{ dict_item['Rodzaj drewna'] }}</td>
                     <td>{{ dict_item['Kod EAN'] }}</td>
-                    <td> 
-                        <form action="/addorder" method="POST"> 
-                        <div class="form-group">             
-                            <input type="text" class="form-control" placeholder="Notes" name="Notes" id="Notes">
+
+                    <form action="/addorder" method="POST">
+                    <div class="form-group">  
+                    <td>
+                        <input type="text" class="form-control" placeholder="ZD" name="zd" id="zd">
+                    </td>
+
+                    <td>                        
+                                   
+                            <input type="text" class="form-control" placeholder="Notes" name="notes" id="notes">
                             <input type="hidden" id = "ean" name="ean" value="{{ dict_item['Kod EAN'] }}">
                         </div> 
                     </td>
+
                     <td>          
                                 <input type="text" class="form-control" placeholder="Week" name="week" id = "week">                         
                             </div> 

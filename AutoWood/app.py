@@ -97,23 +97,25 @@ def generatebarcode():
 @login_required
 def eanreader():
 
-    eans = []
-    barcodes = glob("orders/*************.png")
-    for barcode_file in barcodes:
-        img = cv2.imread(barcode_file)
-        img, orders = decode(img)
-        order = orders[0]
-        cv2.waitKey(0)
+    if request.method == "GET":
 
-        eans_request = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ?', order )
-        eans.append(eans_request[0])
+        eans = []
+        barcodes = glob("orders/*************.png")
+        for barcode_file in barcodes:
+            img = cv2.imread(barcode_file)
+            img, orders = decode(img)
+            order = orders[0]
+            cv2.waitKey(0)
+
+            eans_request = db.execute('SELECT * FROM sekwojaean WHERE "Kod EAN" = ?', order )
+            eans.append(eans_request[0])
+            
+        clean_codes = []
+        for ean in eans:
+            clean_codes.append(ean['Kod EAN'])
         
-    clean_codes = []
-    for ean in eans:
-        clean_codes.append(ean['Kod EAN'])
-    
-        
-    return render_template("eanreader.html", eans=eans, clean_codes = clean_codes)
+            
+        return render_template("eanreader.html", eans=eans, clean_codes = clean_codes)
 
 
 @app.route("/addorder", methods=["POST"])
@@ -123,7 +125,24 @@ def addorder():
     if request.method == "POST":
         week = request.form.get('week')
         ean = request.form.get('ean')
-        print(ean, week, notes)
+        note = request.form.get('notes')
+        current_date = date.today()
+        week = request.form.get("week")
+        week = int(week)
+        if week == 0 or week >= 52:
+            flash("Wrong week number", "danger")
+            return redirect("/eanreader")
+        zd = request.form.get("zd")
+        if zd == '0':
+            flash("Wrong ZD number", "danger")
+            return redirect("/eanreader")
+        flash("Succes", "success" )
+        db.execute("INSERT INTO orders (EAN_CODE, date, week, zd) VALUES (?, ?, ?, ?)", ean, current_date, week, zd)
+        return redirect("/eanreader")
+
+        
+
+        return redirect("/")
 
 
 @app.route("/", methods=["GET", "POST"])
