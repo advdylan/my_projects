@@ -33,24 +33,23 @@
                     <td> 
                         <form action="/addorder" method="POST"> 
                         <div class="form-group">             
-                            <input type="text" class="form-control" placeholder="Notes" name="Notes{{ loop.index }}" id="Notes{{ loop.index }}">
-                            <input type="hidden" id = "EAN{{ loop.index }}" name="EAN{{ loop.index }}" value="{{ dict_item['Kod EAN'] }}">
+                            <input type="text" class="form-control" placeholder="Notes" name="Notes" id="Notes">
+                            <input type="hidden" id = "ean" name="ean" value="{{ dict_item['Kod EAN'] }}">
                         </div> 
                     </td>
                     <td>          
-                                <input type="text" class="form-control" placeholder="Week" name="week" id = "week">
-                                <input type="hidden" id = "ean_list" name = "ean_list" value="{{ clean_codes }}">
+                                <input type="text" class="form-control" placeholder="Week" name="week" id = "week">                         
                             </div> 
                     </td>
                     <td>
-
                         <button  type="submit" class="btn btn-primary">Add order</button>
+                    </form>
                     </td>
                 </tr> 
                 {% endfor %}
          </tbody>
             </table>                              
-        </form>
+        
 
         {% block scripts %}
         <script>

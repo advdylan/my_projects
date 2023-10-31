@@ -122,7 +122,8 @@ def addorder():
 
     if request.method == "POST":
         week = request.form.get('week')
-        eans = request.form.get('ean_list')
+        ean = request.form.get('ean')
+        print(ean, week, notes)
 
 
 @app.route("/", methods=["GET", "POST"])
