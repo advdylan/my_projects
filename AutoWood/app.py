@@ -312,7 +312,7 @@ def delete_row():
         row_id = request.form.get("indexcode")
         zd = request.form.get("zd")
         flash("DELETED", "success")
-        db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ? AND ZD = ? ", row_id, zd)
+        db.execute("DELETE FROM orders WHERE EAN_CODE = ? AND ZD = ? ", row_id, zd)
         db.execute("DELETE FROM production WHERE EAN_CODE = ? AND ZD = ?", row_id, zd)
         return redirect("/orders")
     
