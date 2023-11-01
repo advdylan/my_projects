@@ -145,8 +145,8 @@ def addorder():
         with Image.open(f'orders/{filename}') as barcode_img:
 
             d = ImageDraw.Draw(barcode_img)
-            font = ImageFont.truetype("arial.ttf", 20)
-            d.text((300, 300), zd , font=font, fill=(0,0,0))
+            font = ImageFont.truetype("arial.ttf", 45)
+            d.text((10, 200), zd , font=font, fill=(0,0,0))
             barcode_img.save(f'orders/{filename}')
 
         move_file(filename)
