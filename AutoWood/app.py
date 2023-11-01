@@ -146,12 +146,11 @@ def addorder():
 
             d = ImageDraw.Draw(barcode_img)
             font = ImageFont.truetype("arial.ttf", 20)
-            print(zd)
             d.text((300, 300), zd , font=font, fill=(0,0,0))
-            move_file(filename)
+            barcode_img.save(f'orders/{filename}')
 
-        
-        
+        move_file(filename)
+
         return redirect("/eanreader")
 
 

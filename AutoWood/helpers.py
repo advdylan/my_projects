@@ -113,7 +113,5 @@ def impdb():
 def move_file(filename):
 
     src = f'orders/{filename}'
-    print(src)
     dst = f'orders/archived_orders/{filename}'
-    print(dst)
     shutil.move(src,dst)
