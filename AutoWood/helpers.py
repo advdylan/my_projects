@@ -6,6 +6,7 @@ import subprocess
 import urllib
 import uuid
 import cv2
+import shutil
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -108,3 +109,11 @@ def impdb():
     i = 0
     for page in pages(0, i):
         page.save(f"barcode{i}.png", "PNG")
+
+def move_file(filename):
+
+    src = f'orders/{filename}'
+    print(src)
+    dst = f'orders/archived_orders/{filename}'
+    print(dst)
+    shutil.move(src,dst)

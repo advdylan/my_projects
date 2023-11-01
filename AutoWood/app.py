@@ -1,4 +1,5 @@
 import os
+import shutil
 import pandas as pd
 import cv2
 import barcode
@@ -19,7 +20,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
 
 
-from helpers import login_required, apology, decode, impdb
+from helpers import login_required, apology, decode, impdb, move_file
 from countdays import countdays
 
 UPLOAD_FOLDER = os.path.join('csvfiles')
@@ -140,13 +141,19 @@ def addorder():
         db.execute("INSERT INTO orders (EAN_CODE, date, week, zd, notes) VALUES (?, ?, ?, ?, ?)", ean, current_date, week, zd, note)
 
         filename = f'etykieta-{ean}.png'
-        print(filename)
 
-        return redirect("/eanreader")
+        with Image.open(f'orders/{filename}') as barcode_img:
+
+            d = ImageDraw.Draw(barcode_img)
+            font = ImageFont.truetype("arial.ttf", 20)
+            print(zd)
+            d.text((300, 300), zd , font=font, fill=(0,0,0))
+            move_file(filename)
 
         
+        
+        return redirect("/eanreader")
 
-      
 
 
 @app.route("/", methods=["GET", "POST"])
