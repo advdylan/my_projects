@@ -310,9 +310,10 @@ def delete_row():
 
     if request.method == "POST":
         row_id = request.form.get("indexcode")
+        zd = request.form.get("zd")
         flash("DELETED", "success")
-        db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ?", row_id)
-        db.execute("DELETE FROM production WHERE EAN_CODE = ?", row_id)
+        db.execute("DELETE FROM ORDERS WHERE EAN_CODE = ? AND ZD = ? ", row_id, zd)
+        db.execute("DELETE FROM production WHERE EAN_CODE = ? AND ZD = ?", row_id, zd)
         return redirect("/orders")
     
 @app.route("/delete_wrow", methods =["POST"])
