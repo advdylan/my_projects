@@ -285,8 +285,7 @@ def orders():
         orders = db.execute('SELECT * FROM orders JOIN sekwojaean ON orders.EAN_CODE = sekwojaean."Kod EAN" WHERE week = ?', production_week)
         status = countdays()
         status_dict = {list(d.keys())[0]: list(d.values())[0] for d in status}
-        print(orders)
-
+    
         for order in orders:
             if order['EAN_CODE'] in status_dict:
                 order['status'] = status_dict[order['EAN_CODE']]
