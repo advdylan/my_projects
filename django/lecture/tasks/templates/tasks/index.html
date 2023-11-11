@@ -6,12 +6,9 @@
     </head>
     <body>
         <ul>
-            <li>item one</li>
+            {% for task in tasks %}
+                <li>{{ task }}</li>
+            {% endfor %}
         </ul>
     </body>
-    
-
-
-
-
 </html>
